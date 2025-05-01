@@ -1,0 +1,19 @@
+package top.mygld.zhihuiwen_admin.pojo;
+
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class TemplateOption {
+    private Long id;
+    private Long questionId;
+    private String optionText;
+    private short sortOrder;
+    private Long count;
+}

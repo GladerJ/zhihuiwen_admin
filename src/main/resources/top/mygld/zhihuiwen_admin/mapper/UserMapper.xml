@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.mygld.zhihuiwen_admin.mapper.UserMapper">
+
+    <!-- 新增用户 -->
+    <insert id="insertUser" parameterType="top.mygld.zhihuiwen_admin.pojo.User">
+        INSERT INTO user(avatar, email, username, password, created_at, updated_at)
+        VALUES(#{avatar}, #{email}, #{username}, #{password}, #{createdAt}, #{updatedAt})
+    </insert>
+
+    <!-- 根据ID删除用户 -->
+    <delete id="deleteUser" parameterType="long">
+        DELETE FROM user WHERE id = #{id}
+    </delete>
+
+    <!-- 更新用户信息 -->
+    <update id="updateUser" parameterType="top.mygld.zhihuiwen_admin.pojo.User">
+        UPDATE user
+        <set>
+            <if test="avatar != null">
+                avatar = #{avatar},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            updated_at = #{updatedAt}
+        </set>
+        WHERE id = #{id}
+    </update>
+
+
+    <!-- 根据ID查询用户 -->
+    <select id="selectUserById" parameterType="long" resultType="top.mygld.zhihuiwen_admin.pojo.User">
+        SELECT * FROM user WHERE id = #{id}
+    </select>
+
+    <!-- 根据用户名模糊搜索用户 -->
+    <select id="selectUsersByUsername" parameterType="map" resultType="top.mygld.zhihuiwen_admin.pojo.User">
+        SELECT * FROM user
+        <where>
+            <if test="username != null and username != ''">
+                username LIKE CONCAT('%', #{username}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

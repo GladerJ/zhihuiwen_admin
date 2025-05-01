@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.mygld.zhihuiwen_admin.mapper.ReportMapper">
+
+    <!-- 新增报告，自动设置创建时间 -->
+    <insert id="insertReport" parameterType="top.mygld.zhihuiwen_admin.pojo.Report" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO report(questionnaire_id, content, created_at)
+        VALUES (#{questionnaireId}, #{content}, NOW())
+    </insert>
+
+    <!-- 更新报告 -->
+    <update id="updateReport" parameterType="top.mygld.zhihuiwen_admin.pojo.Report">
+        UPDATE report
+        SET questionnaire_id = #{questionnaireId},
+            content = #{content},
+            created_at = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据问卷ID删除报告 -->
+    <delete id="deleteReportByQuestionnaireId" parameterType="long">
+        DELETE FROM report WHERE questionnaire_id = #{questionnaireId}
+    </delete>
+
+    <!-- 根据报告ID查询报告 -->
+    <select id="selectReportById" parameterType="long" resultType="top.mygld.zhihuiwen_admin.pojo.Report">
+        SELECT * FROM report WHERE id = #{id}
+    </select>
+
+    <!-- 根据问卷ID查询报告（若报告存在则返回） -->
+    <select id="selectReportByQuestionnaireId" parameterType="long" resultType="top.mygld.zhihuiwen_admin.pojo.Report">
+        SELECT * FROM report WHERE questionnaire_id = #{questionnaireId}
+    </select>
+
+    <!-- 查询所有报告（用于分页查询） -->
+    <select id="selectAllReports" resultType="top.mygld.zhihuiwen_admin.pojo.Report">
+        SELECT * FROM report ORDER BY created_at DESC
+    </select>
+
+    <!-- 根据关键词模糊搜索报告内容 -->
+    <select id="searchReportsByContent" parameterType="map" resultType="top.mygld.zhihuiwen_admin.pojo.Report">
+        SELECT * FROM report
+        WHERE content LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY created_at DESC
+    </select>
+
+</mapper>

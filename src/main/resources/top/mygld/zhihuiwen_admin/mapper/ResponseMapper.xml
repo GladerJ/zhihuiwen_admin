@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.mygld.zhihuiwen_admin.mapper.ResponseMapper">
+
+    <!-- 新增回复，返回自增主键 -->
+    <insert id="insertResponse" parameterType="top.mygld.zhihuiwen_admin.pojo.Response" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO response(questionnaire_id, user_id, duration, ip_address, user_agent, submitted_at)
+        VALUES (#{questionnaireId}, #{userId}, #{duration}, #{ipAddress}, #{userAgent}, #{submittedAt})
+    </insert>
+
+    <!-- 更新回复 -->
+    <update id="updateResponse" parameterType="top.mygld.zhihuiwen_admin.pojo.Response">
+        UPDATE response
+        SET questionnaire_id = #{questionnaireId},
+            user_id = #{userId},
+            duration = #{duration},
+            ip_address = #{ipAddress},
+            user_agent = #{userAgent},
+            submitted_at = #{submittedAt}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据ID查询回复 -->
+    <select id="selectResponseById" parameterType="long" resultType="top.mygld.zhihuiwen_admin.pojo.Response">
+        SELECT * FROM response WHERE id = #{id}
+    </select>
+
+    <!-- 根据问卷ID查询所有回复 -->
+    <select id="selectAllResponses" parameterType="long" resultType="top.mygld.zhihuiwen_admin.pojo.Response">
+        SELECT * FROM response
+    </select>
+    <select id="selectAllResponsesByQuestionnaireId" resultType="top.mygld.zhihuiwen_admin.pojo.Response">
+        SELECT * FROM response where questionnaire_id = #{questionnaireId}
+    </select>
+
+    <!-- 根据ID删除回复 -->
+    <delete id="deleteResponseById" parameterType="long">
+        DELETE FROM response WHERE id = #{id}
+    </delete>
+
+    <!-- 根据问卷ID删除所有回复 -->
+    <delete id="deleteResponseByQuestionnaireId" parameterType="long">
+        DELETE FROM response WHERE questionnaire_id = #{questionnaireId}
+    </delete>
+
+</mapper>

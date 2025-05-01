@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.mygld.zhihuiwen_admin.mapper.AnswerMapper">
+
+    <!-- 新增答案，返回自增主键 -->
+    <insert id="insertAnswer" parameterType="top.mygld.zhihuiwen_admin.pojo.Answer" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO answer(response_id, question_id, answer_type, answer_content, created_at)
+        VALUES (#{responseId}, #{questionId}, #{answerType}, #{answerContent}, #{createdAt})
+    </insert>
+
+    <!-- 更新答案 -->
+    <update id="updateAnswer" parameterType="top.mygld.zhihuiwen_admin.pojo.Answer">
+        UPDATE answer
+        SET response_id = #{responseId},
+            question_id = #{questionId},
+            answer_type = #{answerType},
+            answer_content = #{answerContent},
+            created_at = #{createdAt}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据ID查询答案 -->
+    <select id="selectAnswerById" parameterType="long" resultType="top.mygld.zhihuiwen_admin.pojo.Answer">
+        SELECT * FROM answer WHERE id = #{id}
+    </select>
+
+    <!-- 根据回复ID查询所有答案 -->
+    <select id="selectAllAnswersByResponseId" parameterType="long" resultType="top.mygld.zhihuiwen_admin.pojo.Answer">
+        SELECT * FROM answer WHERE response_id = #{responseId}
+    </select>
+
+    <!-- 根据回复ID和关键词模糊搜索答案（针对答案内容） -->
+    <select id="searchAnswersByContent" parameterType="map" resultType="top.mygld.zhihuiwen_admin.pojo.Answer">
+        SELECT * FROM answer
+        WHERE response_id = #{responseId}
+          AND answer_content LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+
+    <!-- 根据ID删除答案 -->
+    <delete id="deleteAnswerById" parameterType="long">
+        DELETE FROM answer WHERE id = #{id}
+    </delete>
+
+    <!-- 根据回复ID删除所有答案 -->
+    <delete id="deleteAnswerByResponseId" parameterType="long">
+        DELETE FROM answer WHERE response_id = #{responseId}
+    </delete>
+
+</mapper>
