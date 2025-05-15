@@ -23,15 +23,14 @@
 
     <!-- 根据用户ID查询单条总报告（原有方法） -->
     <select id="selectTotalReportByUserId" parameterType="long" resultType="top.mygld.zhihuiwen_admin.pojo.TotalReport">
-        SELECT * FROM total_report WHERE user_id = #{userId} LIMIT 1
+        SELECT * FROM total_report WHERE user_id = #{userId}
     </select>
 
 
     <!-- 根据关键词模糊搜索总报告内容（限定用户） -->
     <select id="searchTotalReportsByContent" parameterType="map" resultType="top.mygld.zhihuiwen_admin.pojo.TotalReport">
         SELECT * FROM total_report
-        WHERE user_id = #{userId}
-          AND content LIKE CONCAT('%', #{keyword}, '%')
+        WHERE content LIKE CONCAT('%', #{keyword}, '%')
         ORDER BY created_at DESC
     </select>
     <select id="selectTotalReports" resultType="top.mygld.zhihuiwen_admin.pojo.TotalReport">

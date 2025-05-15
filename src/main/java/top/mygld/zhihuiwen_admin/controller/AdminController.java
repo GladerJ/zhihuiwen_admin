@@ -58,11 +58,12 @@ public class AdminController {
         return admin != null ? Result.success(admin) : Result.error("管理员不存在");
     }
 
-    // 分页查询所有管理员
+    // 分页查询管理员（支持名称模糊搜索）
     @GetMapping("/list")
-    public Result<PageInfo<Admin>> getAllAdmins(@RequestParam(defaultValue = "1") int pageNum,
-                                                @RequestParam(defaultValue = "10") int pageSize) {
-        PageInfo<Admin> pageInfo = adminService.getAllAdmins(pageNum, pageSize);
+    public Result<PageInfo<Admin>> getAdmins(@RequestParam(required = false) String name,
+                                             @RequestParam(defaultValue = "1") int pageNum,
+                                             @RequestParam(defaultValue = "10") int pageSize) {
+        PageInfo<Admin> pageInfo = adminService.getAdmins(name, pageNum, pageSize);
         return Result.success(pageInfo);
     }
 

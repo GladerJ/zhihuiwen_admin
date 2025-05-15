@@ -70,7 +70,7 @@ public class TemplateServiceImpl implements TemplateService {
         // 级联删除：先删除选项，再删除题目，最后删除模板
         templateMapper.deleteOptionsByTemplateId(template.getId());
         templateMapper.deleteQuestionsByTemplateId(template.getId());
-        templateMapper.deleteTemplate(template.getId(), template.getUserId());
+        templateMapper.deleteTemplate(template.getId());
     }
 
     @Override

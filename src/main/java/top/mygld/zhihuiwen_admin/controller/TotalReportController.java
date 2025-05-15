@@ -65,8 +65,7 @@ public class TotalReportController {
     public Result<PageInfo<TotalReport>> searchTotalReports(@RequestParam String keyword,
                                                             @RequestParam(defaultValue = "1") int pageNum,
                                                             @RequestParam(defaultValue = "10") int pageSize) {
-        Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        PageInfo<TotalReport> pageInfo = totalReportService.searchTotalReportsByContent(userId, keyword, pageNum, pageSize);
+        PageInfo<TotalReport> pageInfo = totalReportService.searchTotalReportsByContent(keyword, pageNum, pageSize);
         return Result.success(pageInfo);
     }
 

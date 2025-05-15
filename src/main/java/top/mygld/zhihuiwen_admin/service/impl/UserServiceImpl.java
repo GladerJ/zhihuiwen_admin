@@ -79,4 +79,14 @@ public class UserServiceImpl implements UserService {
         List<User> users = userMapper.selectUsersByUsername(username);
         return new PageInfo<>(users);
     }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return userMapper.selectUserByUsername(username) != null;
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return userMapper.selectUserByEmail(email) != null;
+    }
 }

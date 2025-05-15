@@ -19,11 +19,12 @@ public interface AdminService {
     // 根据id查询管理员
     Admin getAdminById(Long id);
 
-    // 分页查询所有管理员
-    PageInfo<Admin> getAllAdmins(int pageNum, int pageSize);
+    // 分页查询管理员（支持名称模糊搜索）
+    PageInfo<Admin> getAdmins(String name, int pageNum, int pageSize);
 
     // 管理员登录
     Admin login(String name, String password);
 
+    // 根据名称精确查询管理员
     List<Admin> selectAdminByName(String name);
 }

@@ -42,16 +42,6 @@
         </dependency>
 
 <!--        人机验证-->
-        <dependency>
-            <groupId>com.anji-plus</groupId>
-            <artifactId>captcha-spring-boot-starter</artifactId>
-            <version>1.4.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
 
 
 
@@ -167,7 +157,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>top.mygld.zhihuiwen_admin.ZhihuiwenServerApplication</mainClass>
+                    <mainClass>top.mygld.zhihuiwen_admin.ZhihuiwenAdminApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

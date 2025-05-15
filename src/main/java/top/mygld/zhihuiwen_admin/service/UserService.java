@@ -19,4 +19,10 @@ public interface UserService {
 
     // 分页查询用户（支持用户名模糊搜索）
     PageInfo<User> getUsers(String username, int pageNum, int pageSize);
+
+    // 根据用户名查询用户是否存在
+    boolean existsByUsername(String username);
+
+    // 根据邮箱查询用户是否存在
+    boolean existsByEmail(String email);
 }

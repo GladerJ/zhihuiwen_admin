@@ -11,6 +11,6 @@ public interface TotalReportService {
 
     public PageInfo<TotalReport> listTotalReports(int pageNum, int pageSize);
 
-    public PageInfo<TotalReport> searchTotalReportsByContent(Long userId, String keyword, int pageNum, int pageSize);
+    public PageInfo<TotalReport> searchTotalReportsByContent( String keyword, int pageNum, int pageSize);
 
 }

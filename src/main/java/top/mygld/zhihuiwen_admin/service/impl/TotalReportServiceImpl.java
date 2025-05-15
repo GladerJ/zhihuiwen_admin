@@ -44,9 +44,9 @@ public class TotalReportServiceImpl implements TotalReportService {
     }
 
     @Override
-    public PageInfo<TotalReport> searchTotalReportsByContent(Long userId, String keyword, int pageNum, int pageSize) {
+    public PageInfo<TotalReport> searchTotalReportsByContent(String keyword, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<TotalReport> list = totalReportMapper.searchTotalReportsByContent(userId, keyword);
+        List<TotalReport> list = totalReportMapper.searchTotalReportsByContent(keyword);
         return new PageInfo<>(list);
     }
 }

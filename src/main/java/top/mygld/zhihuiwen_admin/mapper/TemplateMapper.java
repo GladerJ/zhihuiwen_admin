@@ -11,7 +11,7 @@ public interface TemplateMapper {
     int insertTemplate(Template template);
     int insertTemplateQuestion(TemplateQuestion question);
     int insertTemplateOption(TemplateOption option);
-    int deleteTemplate(@Param("id") Long id, @Param("userId") Long userId);
+    int deleteTemplate(@Param("id") Long id);
     int deleteQuestionsByTemplateId(@Param("templateId") Long templateId);
     int deleteOptionsByTemplateId(@Param("templateId") Long templateId);
     int updateTemplate(Template template);

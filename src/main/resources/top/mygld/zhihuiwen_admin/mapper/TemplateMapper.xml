@@ -59,7 +59,7 @@
     <!-- 删除问卷 -->
     <delete id="deleteTemplate" parameterType="map">
         DELETE FROM template
-        WHERE id = #{id} AND user_id = #{userId}
+        WHERE id = #{id}
     </delete>
 
     <!-- 查询问卷详情（包含级联的题目和选项） -->

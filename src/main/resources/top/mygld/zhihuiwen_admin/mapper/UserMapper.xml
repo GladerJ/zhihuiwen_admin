@@ -43,13 +43,23 @@
     </select>
 
     <!-- 根据用户名模糊搜索用户 -->
-    <select id="selectUsersByUsername" parameterType="map" resultType="top.mygld.zhihuiwen_admin.pojo.User">
+    <select id="selectUsersByUsername" parameterType="string" resultType="top.mygld.zhihuiwen_admin.pojo.User">
         SELECT * FROM user
         <where>
             <if test="username != null and username != ''">
                 username LIKE CONCAT('%', #{username}, '%')
             </if>
         </where>
+    </select>
+
+    <!-- 根据用户名精确查询用户 -->
+    <select id="selectUserByUsername" parameterType="string" resultType="top.mygld.zhihuiwen_admin.pojo.User">
+        SELECT * FROM user WHERE username = #{username} LIMIT 1
+    </select>
+
+    <!-- 根据邮箱精确查询用户 -->
+    <select id="selectUserByEmail" parameterType="string" resultType="top.mygld.zhihuiwen_admin.pojo.User">
+        SELECT * FROM user WHERE email = #{email} LIMIT 1
     </select>
 
 </mapper>

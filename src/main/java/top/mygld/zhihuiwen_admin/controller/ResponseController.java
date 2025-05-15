@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import top.mygld.zhihuiwen_admin.common.Result;
+import top.mygld.zhihuiwen_admin.dto.ResponseDTO;
 import top.mygld.zhihuiwen_admin.pojo.Response;
 import top.mygld.zhihuiwen_admin.service.ResponseService;
 
@@ -18,24 +19,32 @@ public class ResponseController {
      * 根据ID查询回复详情（含答案）
      */
     @GetMapping("/{id}")
-    public Result<Response> getResponse(@PathVariable("id") Long id) {
-        Response response = responseService.getResponseById(id);
-        if (response == null) {
+    public Result<ResponseDTO> getResponse(@PathVariable("id") Long id) {
+        ResponseDTO responseDTO = responseService.getResponseDTOById(id);
+        if (responseDTO == null) {
             return Result.error("回复不存在");
         }
-        return Result.success(response);
+        return Result.success(responseDTO);
     }
 
     /**
-     * 分页查询指定问卷下所有回复（含答案）
+     * 分页查询回复（支持按问卷ID筛选）
      */
     @GetMapping("/list")
-    public Result<PageInfo<Response>> listResponses(@RequestParam(defaultValue = "1") int pageNum,
-                                                    @RequestParam(defaultValue = "10") int pageSize) {
-        PageInfo<Response> pageInfo = responseService.listResponses(pageNum, pageSize);
+    public Result<PageInfo<Response>> listResponses(
+            @RequestParam(required = false) Long questionnaireId,
+            @RequestParam(defaultValue = "1") int pageNum,
+            @RequestParam(defaultValue = "10") int pageSize) {
+        PageInfo<Response> pageInfo;
+        if (questionnaireId != null) {
+            // 如果指定了问卷ID，则筛选该问卷下的回复
+            pageInfo = responseService.listResponsesByQuestionnaireId(questionnaireId, pageNum, pageSize);
+        } else {
+            // 否则查询所有回复
+            pageInfo = responseService.listResponses(pageNum, pageSize);
+        }
         return Result.success(pageInfo);
     }
-
     /**
      * 根据回复ID删除回复（级联删除答案）
      */

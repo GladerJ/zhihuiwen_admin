@@ -37,10 +37,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public PageInfo<Admin> getAllAdmins(int pageNum, int pageSize) {
+    public PageInfo<Admin> getAdmins(String name, int pageNum, int pageSize) {
         // 使用 PageHelper 进行分页
         PageHelper.startPage(pageNum, pageSize);
-        List<Admin> admins = adminMapper.selectAll();
+        List<Admin> admins = adminMapper.selectAdminsByNameLike(name);
         return new PageInfo<>(admins);
     }
 

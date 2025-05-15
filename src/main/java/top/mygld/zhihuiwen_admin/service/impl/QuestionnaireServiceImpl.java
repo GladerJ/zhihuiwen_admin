@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.mygld.zhihuiwen_admin.mapper.QuestionnaireMapper;
+import top.mygld.zhihuiwen_admin.mapper.ReportMapper;
 import top.mygld.zhihuiwen_admin.pojo.Questionnaire;
 import top.mygld.zhihuiwen_admin.pojo.QuestionnaireOption;
 import top.mygld.zhihuiwen_admin.pojo.QuestionnaireQuestion;
 import top.mygld.zhihuiwen_admin.service.QuestionnaireService;
+import top.mygld.zhihuiwen_admin.service.ReportService;
+import top.mygld.zhihuiwen_admin.service.ResponseService;
 
 import java.util.Date;
 import java.util.List;
@@ -20,6 +23,13 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
     @Autowired
     private QuestionnaireMapper questionnaireMapper;
+
+    @Autowired
+    private ReportService reportService;
+
+    @Autowired
+    private ResponseService responseService;
+
     @Override
     public PageInfo<Questionnaire> searchQuestionnairesByTitle(Long categoryId, String title, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
@@ -73,6 +83,12 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
     @Override
     public void deleteQuestionnaire(Long questionnaireId) {
+        // 删除问卷对应的报告
+        reportService.deleteReportByQuestionnaireId(questionnaireId);
+
+        // 删除问卷对应的所有回复及答案
+        responseService.deleteResponseByQuestionnaireId(questionnaireId);
+
         // 级联删除题目与选项后删除问卷
         questionnaireMapper.deleteOptionsByQuestionnaireId(questionnaireId);
         questionnaireMapper.deleteQuestionsByQuestionnaireId(questionnaireId);

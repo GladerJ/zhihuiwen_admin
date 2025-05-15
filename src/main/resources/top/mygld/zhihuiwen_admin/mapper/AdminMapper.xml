@@ -34,5 +34,14 @@
     <select id="selectAdminByName" resultType="top.mygld.zhihuiwen_admin.pojo.Admin">
         select * from admin where name = #{param1}
     </select>
+    <!-- 根据管理员名称模糊搜索 -->
+    <select id="selectAdminsByNameLike" resultType="top.mygld.zhihuiwen_admin.pojo.Admin">
+        SELECT * FROM admin
+        <where>
+            <if test="name != null and name != ''">
+                name LIKE CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+    </select>
 
 </mapper>
